@@ -36,40 +36,15 @@ class ViewController: UIViewController {
 
 //		let metrics = ["labelHeight": 88]
 //		view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:|[label1(labelHeight@999)]-[label2(label1)]-[label3(label1)]-[label4(label1)]-[label5(label1)]->=10-|", options: [], metrics: metrics, views: viewsDictionary))
-
-		var previous: UILabel?
-
-		for label in [label1, label2, label3, label4, label5] {
-//            label.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-            label.leadingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                constant: 0
-            ).isActive = true
-            label.trailingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                constant: 0
-            ).isActive = true
-            
-//            label.heightAnchor.constraint(equalToConstant: (view.frame.height/5) - 10).isActive = true
-            label.heightAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.heightAnchor,
-                multiplier: 0.2, constant: -10
-            ).isActive = true
-
-			if let previous = previous {
-                label.topAnchor.constraint(
-                    equalTo: previous.bottomAnchor,
-                    constant: 10
-                ).isActive = true
-			}
-
-			previous = label
-		}
+        
+        layout(labels: [label1, label2, label3, label4, label5])
 	}
+    
 
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    
     
     private func createLabel(withString text: String, bgColor color: UIColor) -> UILabel {
         let label = UILabel()
@@ -78,6 +53,38 @@ class ViewController: UIViewController {
         label.text = text
         
         return label
+    }
+    
+    
+    private func layout(labels: [UILabel]){
+        var previous: UILabel?
+        
+        for label in labels {
+            //            label.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+            label.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                constant: 0
+                ).isActive = true
+            label.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                constant: 0
+                ).isActive = true
+            
+            //            label.heightAnchor.constraint(equalToConstant: (view.frame.height/5) - 10).isActive = true
+            label.heightAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.heightAnchor,
+                multiplier: 0.2, constant: -10
+                ).isActive = true
+            
+            if let previous = previous {
+                label.topAnchor.constraint(
+                    equalTo: previous.bottomAnchor,
+                    constant: 10
+                    ).isActive = true
+            }
+            
+            previous = label
+        }
     }
 }
 
