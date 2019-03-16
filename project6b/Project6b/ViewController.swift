@@ -12,30 +12,15 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		let label1 = UILabel()
-		label1.translatesAutoresizingMaskIntoConstraints = false
-		label1.backgroundColor = UIColor.red
-		label1.text = "THESE"
+		let label1 = createLabel(withString: "THESE", bgColor: UIColor.red)
 
-		let label2 = UILabel()
-		label2.translatesAutoresizingMaskIntoConstraints = false
-		label2.backgroundColor = UIColor.cyan
-		label2.text = "ARE"
+		let label2 = createLabel(withString: "ARE", bgColor: UIColor.cyan)
 
-		let label3 = UILabel()
-		label3.translatesAutoresizingMaskIntoConstraints = false
-		label3.backgroundColor = UIColor.yellow
-		label3.text = "SOME"
+		let label3 = createLabel(withString: "SOME", bgColor: UIColor.yellow)
 
-		let label4 = UILabel()
-		label4.translatesAutoresizingMaskIntoConstraints = false
-		label4.backgroundColor = UIColor.green
-		label4.text = "AWESOME"
+		let label4 = createLabel(withString: "AWESOME", bgColor: UIColor.green)
 
-		let label5 = UILabel()
-		label5.translatesAutoresizingMaskIntoConstraints = false
-		label5.backgroundColor = UIColor.orange
-		label5.text = "LABELS"
+		let label5 = createLabel(withString: "LABELS", bgColor: UIColor.orange)
 
 		view.addSubview(label1)
 		view.addSubview(label2)
@@ -55,11 +40,27 @@ class ViewController: UIViewController {
 		var previous: UILabel?
 
 		for label in [label1, label2, label3, label4, label5] {
-			label.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-			label.heightAnchor.constraint(equalToConstant: 88).isActive = true
+//            label.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+            label.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                constant: 0
+            ).isActive = true
+            label.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                constant: 0
+            ).isActive = true
+            
+//            label.heightAnchor.constraint(equalToConstant: (view.frame.height/5) - 10).isActive = true
+            label.heightAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.heightAnchor,
+                multiplier: 0.2, constant: -10
+            ).isActive = true
 
 			if let previous = previous {
-                label.topAnchor.constraint(equalTo: previous.bottomAnchor, constant: 10).isActive = true
+                label.topAnchor.constraint(
+                    equalTo: previous.bottomAnchor,
+                    constant: 10
+                ).isActive = true
 			}
 
 			previous = label
@@ -68,6 +69,15 @@ class ViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    private func createLabel(withString text: String, bgColor color: UIColor) -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = color
+        label.text = text
+        
+        return label
     }
 }
 
