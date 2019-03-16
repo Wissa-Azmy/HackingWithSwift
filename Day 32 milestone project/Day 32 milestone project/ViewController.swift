@@ -16,6 +16,7 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItem))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(emptyList))
         tableView.tableFooterView = UIView()
         title = "Shopping List"
     }
@@ -46,6 +47,11 @@ class ViewController: UITableViewController {
         shoppingList.insert(item, at: 0)
         let indexPath = IndexPath(row: 0, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
+    }
+    
+    @objc private func emptyList(){
+        shoppingList.removeAll()
+        tableView.reloadData()
     }
 }
 
