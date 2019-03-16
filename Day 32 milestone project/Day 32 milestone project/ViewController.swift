@@ -15,26 +15,51 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItem))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(emptyList))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(addItem)
+        )
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .trash,
+            target: self,
+            action: #selector(emptyList)
+        )
         tableView.tableFooterView = UIView()
         title = "Shopping List"
     }
+    
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+        ) -> Int {
         return shoppingList.count
     }
+    
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
+    override func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+        ) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "ItemCell",
+            for: indexPath
+        )
         cell.textLabel?.text = shoppingList[indexPath.row]
         return cell
     }
     
+    
     @objc private func addItem(){
-        let alertController = UIAlertController(title: "Add Item", message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(
+            title: "Add Item",
+            message: nil,
+            preferredStyle: .alert
+        )
         alertController.addTextField()
-        let action = UIAlertAction(title: "Submit", style: .default) { [unowned self, alertController] action in
+        let action = UIAlertAction(title: "Submit", style: .default) {
+            [unowned self, alertController] action in
             let itemField = alertController.textFields![0]
             self.submit(item: itemField.text!)
         }
@@ -43,11 +68,13 @@ class ViewController: UITableViewController {
         present(alertController, animated: true)
     }
     
+    
     private func submit(item: String) {
         shoppingList.insert(item, at: 0)
         let indexPath = IndexPath(row: 0, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
+    
     
     @objc private func emptyList(){
         shoppingList.removeAll()
